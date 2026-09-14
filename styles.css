@@ -434,7 +434,6 @@ button {
 .profile-card-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 1.15rem 1.5rem 0.85rem;
   border-bottom: 1px solid #f1f5f9;
 }
@@ -456,13 +455,6 @@ button {
   border-radius: 50%;
   background-color: #10b981;
   box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
-}
-
-.profile-card-term {
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--color-text-muted);
-  letter-spacing: 0.02em;
 }
 
 .profile-card-identity {
