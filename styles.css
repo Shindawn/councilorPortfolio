@@ -1314,3 +1314,193 @@ button {
     padding: 0.75rem 0.65rem;
   }
 }
+
+/* ==========================================================================
+   Framer Motion-Style Animation System
+   - Spring-physics timing curves (cubic-bezier(0.16, 1, 0.3, 1))
+   - Hero staggered entrance sequences
+   - Scroll-driven viewport reveals
+   - whileHover & whileTap micro-interactions
+   ========================================================================== */
+
+:root {
+  --fm-ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --fm-ease-bounce: cubic-bezier(0.34, 1.25, 0.64, 1);
+  --fm-duration-standard: 0.7s;
+}
+
+/* --------------------------------------------------------------------------
+   Hero Staggered Entrance Keyframes
+   -------------------------------------------------------------------------- */
+@keyframes fmFadeSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fmFadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fmCardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.hero-office-badge {
+  animation: fmFadeSlideDown 0.6s var(--fm-ease-spring) backwards;
+  animation-delay: 0.05s;
+}
+
+.hero-title-main {
+  animation: fmFadeSlideUp 0.75s var(--fm-ease-spring) backwards;
+  animation-delay: 0.12s;
+}
+
+.hero-motto-tagline {
+  animation: fmFadeSlideUp 0.65s var(--fm-ease-spring) backwards;
+  animation-delay: 0.22s;
+}
+
+.hero-desc {
+  animation: fmFadeSlideUp 0.65s var(--fm-ease-spring) backwards;
+  animation-delay: 0.32s;
+}
+
+.hero-actions-row {
+  animation: fmFadeSlideUp 0.65s var(--fm-ease-spring) backwards;
+  animation-delay: 0.42s;
+}
+
+.hero-profile-card {
+  animation: fmCardEnter 0.85s var(--fm-ease-spring) backwards;
+  animation-delay: 0.22s;
+  transition: transform 0.3s var(--fm-ease-spring), box-shadow 0.3s ease;
+}
+
+.hero-profile-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.32), 0 6px 14px -2px rgba(0, 0, 0, 0.1);
+}
+
+/* --------------------------------------------------------------------------
+   Scroll-Driven Reveal System (IntersectionObserver)
+   -------------------------------------------------------------------------- */
+.fm-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--fm-duration-standard) var(--fm-ease-spring),
+              transform var(--fm-duration-standard) var(--fm-ease-spring);
+  transition-delay: var(--fm-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.fm-reveal.fm-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+   Interactive Micro-Interactions (whileHover & whileTap)
+   -------------------------------------------------------------------------- */
+.btn {
+  transition: transform 0.2s var(--fm-ease-spring),
+              box-shadow 0.2s ease,
+              background-color 0.15s ease,
+              border-color 0.15s ease,
+              color 0.15s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 86, 179, 0.2);
+}
+
+.btn:active {
+  transform: scale(0.97) translateY(0);
+}
+
+.btn-ghost:hover {
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.15);
+}
+
+.assistance-step-card,
+.committee-card-clean,
+.speech-card-clean,
+.contact-card-clean {
+  transition: transform 0.3s var(--fm-ease-spring),
+              box-shadow 0.3s ease,
+              border-color 0.2s ease;
+}
+
+.assistance-step-card:hover,
+.committee-card-clean:hover,
+.speech-card-clean:hover,
+.contact-card-clean:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px -4px rgba(0, 0, 0, 0.08), 0 4px 8px -2px rgba(0, 0, 0, 0.04);
+}
+
+.nav-item-link {
+  transition: color 0.18s ease, transform 0.18s var(--fm-ease-spring);
+}
+
+.nav-item-link:hover {
+  transform: translateY(-1px);
+}
+
+/* --------------------------------------------------------------------------
+   Living Pulse Animation for Status Dot
+   -------------------------------------------------------------------------- */
+@keyframes fmPulseGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 7px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+.status-pulse-dot {
+  animation: fmPulseGlow 2.2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+/* --------------------------------------------------------------------------
+   Accessibility: Reduced Motion Guard
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .fm-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

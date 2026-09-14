@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLanguageToggle();
   initLegislationTable();
   initAssistanceModal();
+  initFramerAnimations();
 });
 
 /* ==========================================================================
@@ -212,4 +213,60 @@ function initAssistanceModal() {
       alert('Your email client is opening with your formatted request addressed to Hon. Caadlawon\'s official office.');
     });
   }
+}
+
+/* ==========================================================================
+   Framer Motion-Style Scroll Reveals & Micro-Interactions
+   ========================================================================== */
+function initFramerAnimations() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return;
+  }
+
+  // Target key structural elements for scroll reveals
+  const targetSelectors = [
+    '.constituent-header',
+    '.assistance-step-card',
+    '.constituent-office-sidebar',
+    '.legislation-header',
+    '.table-filter-controls',
+    '.gov-table-container',
+    '.committees-header',
+    '.committee-card-clean',
+    '.bio-layout',
+    '.speeches-header',
+    '.speech-card-clean',
+    '.contact-header',
+    '.contact-card-clean'
+  ];
+
+  const targets = document.querySelectorAll(targetSelectors.join(', '));
+  targets.forEach(el => el.classList.add('fm-reveal'));
+
+  // Stagger delays for grid children (assistance steps, committees, speeches, contacts)
+  const gridContainers = document.querySelectorAll(
+    '.assistance-steps-grid, .committees-grid, .speeches-list, .contact-cards-grid'
+  );
+
+  gridContainers.forEach(container => {
+    const children = Array.from(container.children);
+    children.forEach((child, index) => {
+      child.style.setProperty('--fm-delay', `${index * 90}ms`);
+    });
+  });
+
+  // Spring-feel IntersectionObserver
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('fm-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.08,
+    rootMargin: '0px 0px -30px 0px'
+  });
+
+  targets.forEach(el => revealObserver.observe(el));
 }
