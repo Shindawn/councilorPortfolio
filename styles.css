@@ -466,23 +466,7 @@ button {
 }
 
 .profile-card-identity {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1.25rem 1.5rem 1rem;
-}
-
-.profile-avatar-circle {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background-color: var(--gov-navy);
-  color: var(--gov-gold);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  border: 2px solid var(--color-border-light);
+  padding: 1.15rem 1.5rem 0.85rem;
 }
 
 .profile-official-name {
