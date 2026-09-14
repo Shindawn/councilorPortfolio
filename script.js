@@ -1,35 +1,23 @@
 /**
- * Hon. Charlon Gonzales Caadlawon — Civic Portfolio Interactions
- * Sangguniang Bayan Member | Municipality of Bagamanoc, Catanduanes
+ * Hon. Engr. Charlon Gonzales Caadlawon — Official Civic Portal Interactions
+ * Sangguniang Bayan | Municipality of Bagamanoc, Catanduanes
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   initNavigation();
   initLanguageToggle();
-  initPolicyFilters();
-  initGalleryFilters();
+  initLegislationTable();
   initAssistanceModal();
 });
 
 /* ==========================================================================
-   Navigation & Header Scroll
+   Navigation & Mobile Drawer
    ========================================================================== */
 function initNavigation() {
-  const header = document.querySelector('.site-header');
-  const mobileToggle = document.querySelector('.mobile-nav-toggle');
-  const mobileDrawer = document.querySelector('.mobile-nav-drawer');
-  const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-item a');
+  const mobileToggle = document.querySelector('.mobile-menu-btn');
+  const mobileDrawer = document.querySelector('.mobile-drawer');
+  const navLinks = document.querySelectorAll('.nav-item-link, .mobile-nav-list a');
 
-  // Sticky Header Shadow
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 20) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
-    }
-  }, { passive: true });
-
-  // Mobile Menu Drawer Toggle
   if (mobileToggle && mobileDrawer) {
     mobileToggle.addEventListener('click', () => {
       const isOpen = mobileDrawer.classList.contains('open');
@@ -37,7 +25,6 @@ function initNavigation() {
       mobileToggle.setAttribute('aria-expanded', !isOpen);
     });
 
-    // Close drawer when link clicked
     navLinks.forEach(link => {
       link.addEventListener('click', () => {
         mobileDrawer.classList.remove('open');
@@ -46,13 +33,8 @@ function initNavigation() {
     });
   }
 
-  // Active section highlighting with IntersectionObserver
+  // Active section tracking
   const sections = document.querySelectorAll('section[id]');
-  const observerOptions = {
-    rootMargin: '-80px 0px -40% 0px',
-    threshold: 0.1
-  };
-
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -66,21 +48,22 @@ function initNavigation() {
         });
       }
     });
-  }, observerOptions);
+  }, { rootMargin: '-70px 0px -50% 0px', threshold: 0.1 });
 
   sections.forEach(sec => observer.observe(sec));
 }
 
 /* ==========================================================================
-   Bilingual (English / Filipino) Content Toggle
+   Bilingual (English / Filipino) Toggle
    ========================================================================== */
 let currentLang = 'en';
 
 function initLanguageToggle() {
-  const langToggleButtons = document.querySelectorAll('.lang-toggle-btn');
+  const langButtons = document.querySelectorAll('.lang-btn');
 
-  langToggleButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
+  langButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
       currentLang = currentLang === 'en' ? 'tl' : 'en';
       applyLanguage(currentLang);
     });
@@ -88,8 +71,8 @@ function initLanguageToggle() {
 }
 
 function applyLanguage(lang) {
-  const translatableElements = document.querySelectorAll('[data-en][data-tl]');
-  translatableElements.forEach(el => {
+  const elements = document.querySelectorAll('[data-en][data-tl]');
+  elements.forEach(el => {
     const text = el.getAttribute(`data-${lang}`);
     if (text) {
       if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
@@ -100,82 +83,77 @@ function applyLanguage(lang) {
     }
   });
 
-  // Update toggle button labels
-  const langLabels = document.querySelectorAll('.current-lang-text');
-  langLabels.forEach(label => {
-    label.textContent = lang === 'en' ? 'EN | TL' : 'TL | EN';
+  const langLabels = document.querySelectorAll('.current-lang-code');
+  langLabels.forEach(l => {
+    l.textContent = lang === 'en' ? 'EN | TL' : 'TL | EN';
   });
 
   document.documentElement.lang = lang === 'en' ? 'en' : 'fil';
 }
 
 /* ==========================================================================
-   Legislative Filter Tabs
+   Legislative Table Filtering & Search
    ========================================================================== */
-function initPolicyFilters() {
-  const filterTabs = document.querySelectorAll('.policy-filter-bar .filter-tab');
-  const policyCards = document.querySelectorAll('.policy-card');
+function initLegislationTable() {
+  const filterPills = document.querySelectorAll('.table-pill-btn');
+  const searchInput = document.querySelector('.table-search-input');
+  const tableRows = document.querySelectorAll('.gov-table tbody tr');
 
-  if (!filterTabs.length) return;
+  if (!tableRows.length) return;
 
-  filterTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      filterTabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
+  function filterTable() {
+    const activePill = document.querySelector('.table-pill-btn.active');
+    const selectedCategory = activePill ? activePill.getAttribute('data-filter') : 'all';
+    const searchQuery = searchInput ? searchInput.value.toLowerCase().trim() : '';
 
-      const filterValue = tab.getAttribute('data-filter');
+    let visibleCount = 0;
 
-      policyCards.forEach(card => {
-        const category = card.getAttribute('data-category') || '';
-        const type = card.getAttribute('data-type') || '';
+    tableRows.forEach(row => {
+      const rowCategory = row.getAttribute('data-category') || '';
+      const rowType = row.getAttribute('data-type') || '';
+      const rowText = row.innerText.toLowerCase();
 
-        if (filterValue === 'all' || category.includes(filterValue) || type === filterValue) {
-          card.style.display = 'flex';
-          setTimeout(() => { card.style.opacity = '1'; }, 10);
-        } else {
-          card.style.display = 'none';
-        }
-      });
+      const matchesCategory = selectedCategory === 'all' || 
+                              rowCategory.includes(selectedCategory) || 
+                              rowType === selectedCategory;
+
+      const matchesSearch = !searchQuery || rowText.includes(searchQuery);
+
+      if (matchesCategory && matchesSearch) {
+        row.style.display = '';
+        visibleCount++;
+      } else {
+        row.style.display = 'none';
+      }
+    });
+
+    const noResultsRow = document.getElementById('tableNoResultsRow');
+    if (noResultsRow) {
+      noResultsRow.style.display = visibleCount === 0 ? '' : 'none';
+    }
+  }
+
+  filterPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      filterPills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      filterTable();
     });
   });
+
+  if (searchInput) {
+    searchInput.addEventListener('input', filterTable);
+  }
 }
 
 /* ==========================================================================
-   Gallery Filter Tabs
-   ========================================================================== */
-function initGalleryFilters() {
-  const galleryTabs = document.querySelectorAll('.gallery-filter-bar .filter-tab');
-  const galleryItems = document.querySelectorAll('.gallery-item');
-
-  if (!galleryTabs.length) return;
-
-  galleryTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      galleryTabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-
-      const filterValue = tab.getAttribute('data-filter');
-
-      galleryItems.forEach(item => {
-        const cat = item.getAttribute('data-category');
-        if (filterValue === 'all' || cat === filterValue) {
-          item.style.display = 'block';
-        } else {
-          item.style.display = 'none';
-        }
-      });
-    });
-  });
-}
-
-/* ==========================================================================
-   Assistance Request Modal Dialog
+   Assistance Modal Dialog
    ========================================================================== */
 function initAssistanceModal() {
   const modal = document.getElementById('assistanceModal');
   const openButtons = document.querySelectorAll('[data-open-modal="assistanceModal"]');
   const closeButtons = document.querySelectorAll('[data-close-modal="assistanceModal"]');
-  const form = document.getElementById('constituentInquiryForm');
+  const form = document.getElementById('assistanceQuickForm');
 
   if (!modal) return;
 
@@ -200,41 +178,35 @@ function initAssistanceModal() {
     btn.addEventListener('click', closeModal);
   });
 
-  // Close when clicking outside dialog
   modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      closeModal();
-    }
+    if (e.target === modal) closeModal();
   });
 
-  // ESC key to close
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && modal.classList.contains('open')) {
       closeModal();
     }
   });
 
-  // Form submission handler (mailto generator to keep privacy & zero server dependency)
   if (form) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const name = document.getElementById('reqName').value.trim();
-      const barangay = document.getElementById('reqBarangay').value;
-      const service = document.getElementById('reqService').value;
-      const details = document.getElementById('reqDetails').value.trim();
+      const name = document.getElementById('govName').value.trim();
+      const barangay = document.getElementById('govBarangay').value;
+      const type = document.getElementById('govCategory').value;
+      const details = document.getElementById('govDetails').value.trim();
 
-      const subject = encodeURIComponent(`Constituent Assistance Request: ${service} - ${name} (${barangay})`);
+      const subject = encodeURIComponent(`Constituent Assistance: [${type}] - ${name} (${barangay})`);
       const body = encodeURIComponent(
         `Dear Office of Hon. Engr. Charlon G. Caadlawon,\n\n` +
-        `I am writing to officially request constituent assistance:\n\n` +
-        `Full Name: ${name}\n` +
+        `I am officially requesting constituent coordination / assistance:\n\n` +
+        `Name: ${name}\n` +
         `Barangay: ${barangay}, Bagamanoc, Catanduanes\n` +
-        `Assistance/Concern Type: ${service}\n\n` +
-        `Details of Request:\n${details}\n\n` +
-        `Submitted via Councilor Charlon Caadlawon Official Civic Portfolio.`
+        `Concern / Category: ${type}\n\n` +
+        `Description of Request:\n${details}\n\n` +
+        `Submitted via Official Councilor Caadlawon Public Service Portal.`
       );
 
-      // Open email client
       window.location.href = `mailto:Charlongc.02@gmail.com?subject=${subject}&body=${body}`;
       closeModal();
       alert('Your email client is opening with your formatted request addressed to Hon. Caadlawon\'s official office.');
