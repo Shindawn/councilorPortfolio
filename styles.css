@@ -1504,3 +1504,230 @@ button {
     transform: none !important;
   }
 }
+
+/* ==========================================================================
+   Horizontal Website Presentation Architecture (Option B)
+   ========================================================================== */
+
+/* Top Progress Track */
+.horizontal-progress-track {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(0, 51, 102, 0.08);
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.horizontal-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--gov-blue), var(--gov-gold-light));
+  transition: width 0.15s ease-out;
+}
+
+/* Floating Section Navigation Controls */
+.floating-panel-nav {
+  position: fixed;
+  bottom: 1.75rem;
+  right: 2rem;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border);
+  border-radius: 9999px;
+  padding: 0.4rem 0.65rem;
+  box-shadow: 0 10px 25px -3px rgba(15, 23, 42, 0.14), 0 4px 6px -2px rgba(15, 23, 42, 0.05);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.panel-nav-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: #ffffff;
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.panel-nav-btn:hover:not(:disabled) {
+  background: var(--gov-blue);
+  color: #ffffff;
+  border-color: var(--gov-blue);
+  transform: scale(1.06);
+}
+
+.panel-nav-btn:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.panel-nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.panel-counter {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  padding: 0 0.35rem;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  letter-spacing: 0.05em;
+  user-select: none;
+}
+
+.counter-slash {
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+/* Desktop Horizontal Experience (> 900px) */
+@media (min-width: 901px) {
+  html, body {
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gov-top-bar {
+    flex-shrink: 0;
+    width: 100%;
+    z-index: 1001;
+  }
+
+  .site-header {
+    flex-shrink: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+
+  .horizontal-viewport {
+    flex: 1 1 auto;
+    width: 100vw;
+    height: calc(100vh - 105px);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+  }
+
+  /* Sleek custom scrollbar for the horizontal viewport */
+  .horizontal-viewport::-webkit-scrollbar {
+    height: 6px;
+  }
+  .horizontal-viewport::-webkit-scrollbar-track {
+    background: #f1f5f9;
+  }
+  .horizontal-viewport::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+  }
+  .horizontal-viewport::-webkit-scrollbar-thumb:hover {
+    background: var(--gov-blue);
+  }
+
+  .horizontal-track {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: max-content;
+  }
+
+  .presentation-panel {
+    flex: 0 0 100vw;
+    width: 100vw;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    box-sizing: border-box;
+    padding: 2.5rem 0 4.5rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .presentation-panel::-webkit-scrollbar {
+    width: 6px;
+  }
+  .presentation-panel::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .presentation-panel::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+  }
+  .presentation-panel::-webkit-scrollbar-thumb:hover {
+    background: var(--gov-blue);
+  }
+
+  /* Hero Panel: Center content vertically on desktop screens */
+  .panel-hero {
+    justify-content: center;
+    padding: 1.5rem 0;
+  }
+
+  /* Contact / Footer Panel: Center content vertically on desktop screens */
+  .panel-contact {
+    justify-content: center;
+    padding: 3rem 0;
+  }
+}
+
+/* Mobile & Tablet Fallback (<= 900px): Standard Vertical Scrolling Layout */
+@media (max-width: 900px) {
+  html, body {
+    overflow-y: auto !important;
+    height: auto !important;
+  }
+
+  .horizontal-progress-track,
+  .floating-panel-nav {
+    display: none !important;
+  }
+
+  .horizontal-viewport {
+    overflow: visible !important;
+    height: auto !important;
+    width: 100% !important;
+  }
+
+  .horizontal-track {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .presentation-panel {
+    display: block !important;
+    width: 100% !important;
+    flex: none !important;
+    height: auto !important;
+    overflow: visible !important;
+    scroll-snap-align: none !important;
+    padding: 3.5rem 0 !important;
+  }
+}
+

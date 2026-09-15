@@ -90,10 +90,30 @@
     </div>
   </header>
 
-  <!-- ========================================================================
-       Hero Section — Balanced 2-Column: Left Direct Text & Right Clean Profile Card
-       ======================================================================== -->
-  <section id="hero" class="hero-portal">
+  <!-- Top Horizontal Progress Track -->
+  <div class="horizontal-progress-track" aria-hidden="true">
+    <div class="horizontal-progress-fill" id="horizontalProgressFill"></div>
+  </div>
+
+  <!-- Floating Panel Navigation Controls -->
+  <div class="floating-panel-nav" id="floatingPanelNav" aria-label="Section navigation">
+    <button type="button" class="panel-nav-btn prev-btn" id="prevPanelBtn" aria-label="Previous Section" title="Previous Section">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="panel-counter">
+      <span id="activePanelNum">01</span><span class="counter-slash">/</span><span id="totalPanelsNum">08</span>
+    </div>
+    <button type="button" class="panel-nav-btn next-btn" id="nextPanelBtn" aria-label="Next Section" title="Next Section">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+
+  <!-- Horizontal Presentation Viewport -->
+  <div class="horizontal-viewport" id="horizontalViewport">
+    <main class="horizontal-track" id="horizontalTrack">
+
+      <!-- Panel 1: Hero & Official Mandate -->
+      <section id="hero" class="presentation-panel panel-hero hero-portal" data-panel-index="0">
     <div class="container hero-content-grid">
       <div class="hero-text-block">
         <div class="hero-office-badge">
@@ -170,9 +190,9 @@
   </section>
 
   <!-- ========================================================================
-       Constituent Services & Assistance Portal (PROMINENT / HIGH UP)
+       Panel 2: Constituent Services & Assistance Portal
        ======================================================================== -->
-  <section id="services" class="section-constituent">
+  <section id="services" class="presentation-panel panel-services section-constituent" data-panel-index="1">
     <div class="container">
       <div class="constituent-header">
         <span class="gov-section-badge" data-en="Direct Public Service" data-tl="Direktang Paglilingkod">Direct Public Service</span>
@@ -273,9 +293,9 @@
   </section>
 
   <!-- ========================================================================
-       Ordinances & Resolutions — Clean Structured Scannable Table Layout
+       Panel 3: Ordinances & Resolutions — Clean Structured Scannable Table Layout
        ======================================================================== -->
-  <section id="legislation" class="section-legislation">
+  <section id="legislation" class="presentation-panel panel-legislation section-legislation" data-panel-index="2">
     <div class="container">
       <div>
         <span class="gov-section-badge" data-en="Legislative Portfolio" data-tl="Mga Talaan sa Konseho">Legislative Portfolio</span>
@@ -507,7 +527,7 @@
   <!-- ========================================================================
        Committees & Council Responsibilities
        ======================================================================== -->
-  <section id="committees" class="section-committees">
+  <section id="committees" class="presentation-panel panel-committees section-committees" data-panel-index="3">
     <div class="container">
       <div>
         <span class="gov-section-badge" data-en="Council Leadership" data-tl="Pamumuno sa Konseho">Council Leadership</span>
@@ -590,7 +610,7 @@
   <!-- ========================================================================
        About / Biography Section
        ======================================================================== -->
-  <section id="about" class="section-biography">
+  <section id="about" class="presentation-panel panel-about section-biography" data-panel-index="4">
     <div class="container">
       <div class="bio-layout">
         <div class="bio-article">
@@ -653,7 +673,7 @@
   <!-- ========================================================================
        Plenary Speeches & News Section
        ======================================================================== -->
-  <section id="speeches" class="section-speeches">
+  <section id="speeches" class="presentation-panel panel-speeches section-speeches" data-panel-index="5">
     <div class="container">
       <div>
         <span class="gov-section-badge" data-en="Plenary Record" data-tl="Talaan sa Sesyon">Plenary Record</span>
@@ -711,7 +731,7 @@
   <!-- ========================================================================
        Field & Session Photos
        ======================================================================== -->
-  <section id="gallery" class="section-gallery">
+  <section id="gallery" class="presentation-panel panel-gallery section-gallery" data-panel-index="6">
     <div class="container">
       <div>
         <span class="gov-section-badge" data-en="Field Documentation" data-tl="Dokumentasyon sa Komunidad">Field Documentation</span>
@@ -761,7 +781,61 @@
   </section>
 
   <!-- ========================================================================
-       Assistance Request Modal Dialog
+       Government Standard Footer & Contact Panel
+       ======================================================================== -->
+  <footer id="contact" class="presentation-panel panel-contact site-footer-gov" role="contentinfo" data-panel-index="7">
+    <div class="container">
+      <div class="footer-main-row">
+        <div class="footer-brand-block">
+          <h3>Office of Councilor Charlon G. Caadlawon</h3>
+          <p data-en="Sangguniang Bayan of the Municipality of Bagamanoc, Province of Catanduanes, Philippines. Providing honest, accountable, and technically grounded representation." data-tl="Sangguniang Bayan ng Bayan ng Bagamanoc, Lalawigan ng Catanduanes. Tapat, may pananagutan, at maaasahang paglilingkod.">
+            Sangguniang Bayan of the Municipality of Bagamanoc, Province of Catanduanes, Philippines. Providing honest, accountable, and technically grounded representation.
+          </p>
+          <div style="margin-top: 0.85rem; font-style: italic; color: #cbd5e1;" data-en="&ldquo;Your honest Public Servant&rdquo;" data-tl="&ldquo;Ang Inyong Tapat na Lingkod-Bayan&rdquo;">
+            &ldquo;Your honest Public Servant&rdquo;
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 data-en="Quick Navigation" data-tl="Nilalaman">Quick Navigation</h4>
+          <ul class="footer-link-list">
+            <li><a href="#services" data-en="Constituent Services" data-tl="Serbisyo sa Mamamayan">Constituent Services</a></li>
+            <li><a href="#legislation" data-en="Legislative Table" data-tl="Talaan ng Lehislasyon">Legislative Table</a></li>
+            <li><a href="#committees" data-en="Council Committees" data-tl="Mga Komite">Council Committees</a></li>
+            <li><a href="#about" data-en="Biography &amp; Profession" data-tl="Talambuhay">Biography &amp; Profession</a></li>
+            <li><a href="#speeches" data-en="Privilege Speeches" data-tl="Mga Talumpati">Privilege Speeches</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 data-en="Official Office" data-tl="Tanggapan">Official Office</h4>
+          <p style="color: #cbd5e1; font-size: 0.8125rem; line-height: 1.5; margin-bottom: 0.65rem;">
+            2nd Floor, Sangguniang Bayan Hall<br>
+            Municipal Building, Poblacion<br>
+            Bagamanoc, Catanduanes 4807
+          </p>
+          <p style="font-size: 0.8125rem;">
+            Email: <a href="mailto:Charlongc.02@gmail.com" style="color: #93c5fd; text-decoration: underline;">Charlongc.02@gmail.com</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-legal-bar">
+        <div>
+          &copy; 2025–2028 Office of Councilor Charlon G. Caadlawon. Sangguniang Bayan of Bagamanoc.
+        </div>
+        <div>
+          Official Public Service Portal • Republic of the Philippines
+        </div>
+      </div>
+    </div>
+  </footer>
+
+    </main>
+  </div> <!-- /.horizontal-viewport -->
+
+  <!-- ========================================================================
+       Assistance Request Modal Dialog (Global Fixed Overlay)
        ======================================================================== -->
   <div id="assistanceModal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-labelledby="govModalTitle">
     <div class="modal-card">
@@ -829,57 +903,6 @@
       </div>
     </div>
   </div>
-
-  <!-- ========================================================================
-       Government Standard Footer
-       ======================================================================== -->
-  <footer id="contact" class="site-footer-gov" role="contentinfo">
-    <div class="container">
-      <div class="footer-main-row">
-        <div class="footer-brand-block">
-          <h3>Office of Councilor Charlon G. Caadlawon</h3>
-          <p data-en="Sangguniang Bayan of the Municipality of Bagamanoc, Province of Catanduanes, Philippines. Providing honest, accountable, and technically grounded representation." data-tl="Sangguniang Bayan ng Bayan ng Bagamanoc, Lalawigan ng Catanduanes. Tapat, may pananagutan, at maaasahang paglilingkod.">
-            Sangguniang Bayan of the Municipality of Bagamanoc, Province of Catanduanes, Philippines. Providing honest, accountable, and technically grounded representation.
-          </p>
-          <div style="margin-top: 0.85rem; font-style: italic; color: #cbd5e1;" data-en="&ldquo;Your honest Public Servant&rdquo;" data-tl="&ldquo;Ang Inyong Tapat na Lingkod-Bayan&rdquo;">
-            &ldquo;Your honest Public Servant&rdquo;
-          </div>
-        </div>
-
-        <div class="footer-col">
-          <h4 data-en="Quick Navigation" data-tl="Nilalaman">Quick Navigation</h4>
-          <ul class="footer-link-list">
-            <li><a href="#services" data-en="Constituent Services" data-tl="Serbisyo sa Mamamayan">Constituent Services</a></li>
-            <li><a href="#legislation" data-en="Legislative Table" data-tl="Talaan ng Lehislasyon">Legislative Table</a></li>
-            <li><a href="#committees" data-en="Council Committees" data-tl="Mga Komite">Council Committees</a></li>
-            <li><a href="#about" data-en="Biography &amp; Profession" data-tl="Talambuhay">Biography &amp; Profession</a></li>
-            <li><a href="#speeches" data-en="Privilege Speeches" data-tl="Mga Talumpati">Privilege Speeches</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h4 data-en="Official Office" data-tl="Tanggapan">Official Office</h4>
-          <p style="color: #cbd5e1; font-size: 0.8125rem; line-height: 1.5; margin-bottom: 0.65rem;">
-            2nd Floor, Sangguniang Bayan Hall<br>
-            Municipal Building, Poblacion<br>
-            Bagamanoc, Catanduanes 4807
-          </p>
-          <p style="font-size: 0.8125rem;">
-            Email: <a href="mailto:Charlongc.02@gmail.com" style="color: #93c5fd; text-decoration: underline;">Charlongc.02@gmail.com</a>
-          </p>
-        </div>
-      </div>
-
-      <div class="footer-legal-bar">
-        <div>
-          &copy; 2025–2028 Office of Councilor Charlon G. Caadlawon. Sangguniang Bayan of Bagamanoc.
-        </div>
-        <div>
-          Official Public Service Portal • Republic of the Philippines
-        </div>
-      </div>
-    </div>
-  </footer>
 
   <script src="script.js"></script>
 </body>
