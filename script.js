@@ -145,6 +145,30 @@ function initLegislationTable() {
 
   if (searchInput) {
     searchInput.addEventListener('input', filterTable);
+
+    // Quick keyboard shortcut '/' to focus search
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '/' && document.activeElement !== searchInput) {
+        const activeTag = document.activeElement ? document.activeElement.tagName : '';
+        if (!['INPUT', 'TEXTAREA', 'SELECT'].includes(activeTag)) {
+          const modal = document.getElementById('assistanceModal');
+          if (modal && modal.classList.contains('open')) return;
+
+          e.preventDefault();
+          const legislationPanel = document.getElementById('legislation');
+          if (legislationPanel) {
+            const viewport = document.getElementById('horizontalViewport');
+            if (viewport && window.innerWidth > 900) {
+              viewport.scrollTo({ left: legislationPanel.offsetLeft, behavior: 'smooth' });
+            } else {
+              legislationPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }
+          searchInput.focus();
+          searchInput.select();
+        }
+      }
+    });
   }
 }
 
