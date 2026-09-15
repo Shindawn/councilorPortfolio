@@ -2,7 +2,7 @@
    Hon. Engr. Charlon Gonzales Caadlawon — Official Civic Portal
    Sangguniang Bayan | Municipality of Bagamanoc, Catanduanes
   Design Direction: Civic editorial portal
-  Typography: DM Sans body with Space Grotesk display headings
+  Typography: Manrope body with Space Grotesk display headings
    ========================================================================== */
 
 :root {
@@ -67,9 +67,9 @@
   --color-text-inverse: #ffffff;
 
   /* Typography: comfortable reading measure with a clear display face */
-  --font-sans: "DM Sans", "Segoe UI", sans-serif;
-  --font-heading: "Space Grotesk", "DM Sans", sans-serif;
-  --font-mono: "DM Sans", "Segoe UI", sans-serif;
+  --font-sans: "Manrope", "Segoe UI", sans-serif;
+  --font-heading: "Space Grotesk", "Manrope", sans-serif;
+  --font-mono: "Manrope", "Segoe UI", sans-serif;
 
   /* Spacing & Layout */
   --container-max: 1140px;
