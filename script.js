@@ -4,13 +4,49 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  initThemeToggle();
   initNavigation();
   initLanguageToggle();
   initLegislationTable();
   initAssistanceModal();
   initFramerAnimations();
   initHorizontalPresentation();
+  initTypingCard();
 });
+
+/* ==========================================================================
+   Theme Toggle (GitHub Light / Dark Mode)
+   ========================================================================== */
+function initThemeToggle() {
+  const themeBtn = document.getElementById('themeToggleBtn');
+  if (!themeBtn) return;
+
+  const moonIcon = themeBtn.querySelector('.theme-icon-moon');
+  const sunIcon = themeBtn.querySelector('.theme-icon-sun');
+
+  function updateIcons(isDark) {
+    if (moonIcon && sunIcon) {
+      moonIcon.style.display = isDark ? 'none' : 'block';
+      sunIcon.style.display = isDark ? 'block' : 'none';
+    }
+    const label = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+    themeBtn.setAttribute('title', label);
+    themeBtn.setAttribute('aria-label', label);
+  }
+
+  // Sync icons on page load
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  updateIcons(isDark);
+
+  themeBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('primer-theme', newTheme);
+    updateIcons(newTheme === 'dark');
+  });
+}
 
 /* ==========================================================================
    Navigation & Mobile Drawer
@@ -498,3 +534,59 @@ function initHorizontalPresentation() {
   updateState();
 }
 
+/* ==========================================================================
+   Typing Card — Typewriter Effect for Hero Profile Card
+   ========================================================================== */
+function initTypingCard() {
+  // Sequence: [elementId, text, speed in ms per char]
+  const sequence = [
+    { id: 'type-name',      text: 'Hon. Charlon G. Caadlawon',                    speed: 55 },
+    { id: 'type-role',      text: 'Municipal Councilor \u2022 Bagamanoc, Catanduanes', speed: 30 },
+    { id: 'type-mandate',   text: 'Rank 1 SB Councilor (4,321 votes)',             speed: 35 },
+    { id: 'type-committee', text: 'Ways & Means \u2022 Education \u2022 Tourism',           speed: 40 },
+  ];
+
+  let started = false;
+
+  function typeElement(el, text, speed) {
+    return new Promise(resolve => {
+      el.textContent = '';
+      el.classList.add('typing-active');
+      let i = 0;
+      const interval = setInterval(() => {
+        el.textContent += text[i];
+        i++;
+        if (i >= text.length) {
+          clearInterval(interval);
+          el.classList.remove('typing-active');
+          resolve();
+        }
+      }, speed);
+    });
+  }
+
+  async function runSequence() {
+    await new Promise(r => setTimeout(r, 300));
+    for (const item of sequence) {
+      const el = document.getElementById(item.id);
+      if (!el) continue;
+      await typeElement(el, item.text, item.speed);
+      await new Promise(r => setTimeout(r, 180));
+    }
+  }
+
+  const card = document.querySelector('.hero-profile-card');
+  if (!card) return;
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !started) {
+        started = true;
+        observer.disconnect();
+        runSequence();
+      }
+    });
+  }, { threshold: 0.4 });
+
+  observer.observe(card);
+}

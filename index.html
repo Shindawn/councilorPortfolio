@@ -6,12 +6,19 @@
   <title>Hon. Engr. Charlon Gonzales Caadlawon | Municipal Councilor — Bagamanoc, Catanduanes</title>
   <meta name="description" content="Official public service portal of Hon. Engr. Charlon Gonzales Caadlawon, Municipal Councilor (Sangguniang Bayan Member), Municipality of Bagamanoc, Catanduanes. 'Your honest Public Servant.'">
 
-  <!-- Clean Government Typography (Inter + Outfit) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <!-- Typography: GitHub Primer Native System Stack (no external font) -->
 
   <link rel="stylesheet" href="styles.css">
+  <script>
+    (function() {
+      const saved = localStorage.getItem('primer-theme');
+      if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
 </head>
 <body>
 
@@ -25,8 +32,17 @@
         <span>Republic of the Philippines • Province of Catanduanes • Municipality of Bagamanoc</span>
       </div>
       <div class="gov-top-actions">
+        <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle dark mode" title="Toggle dark/light mode">
+          <!-- Moon icon (active in light mode) -->
+          <svg class="theme-icon-moon" width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M9.598 1.591a.75.75 0 0 1 .785-.175 7 7 0 1 1-8.967 8.967.75.75 0 0 1 .961-.96 5.5 5.5 0 0 0 7.046-7.046.75.75 0 0 1 .175-.786Zm1.616 1.945a7 7 0 0 1-7.678 7.678 5.5 5.5 0 1 0 7.678-7.678Z"/>
+          </svg>
+          <!-- Sun icon (active in dark mode) -->
+          <svg class="theme-icon-sun" width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" style="display: none;">
+            <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM8 0a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0V.75A.75.75 0 0 1 8 0ZM8 13a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 8 13ZM2.343 2.343a.75.75 0 0 1 1.061 0l1.06 1.061a.75.75 0 0 1-1.06 1.06l-1.06-1.06a.75.75 0 0 1 0-1.06Zm9.193 9.193a.75.75 0 0 1 1.06 0l1.061 1.06a.75.75 0 0 1-1.06 1.061l-1.061-1.06a.75.75 0 0 1 0-1.061ZM0 8a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5H.75A.75.75 0 0 1 0 8Zm13 0a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5A.75.75 0 0 1 13 8ZM2.343 13.657a.75.75 0 0 1 0-1.06l1.06-1.061a.75.75 0 1 1 1.061 1.06l-1.06 1.061a.75.75 0 0 1-1.061 0Zm9.193-9.193a.75.75 0 0 1 0-1.06l1.061-1.061a.75.75 0 1 1 1.06 1.06l-1.06 1.061a.75.75 0 0 1-1.061 0Z"/>
+          </svg>
+        </button>
         <button type="button" class="lang-btn" aria-label="Switch Language">
-          <span>🌐</span>
           <span class="current-lang-code">EN | TL</span>
         </button>
       </div>
@@ -148,65 +164,44 @@
               </a>
             </div>
 
-            <!-- Executive KPI Metrics Strip -->
-            <div class="saas-kpi-strip">
-              <div class="kpi-card">
-                <span class="kpi-number accent-gold">#1 Rank</span>
-                <span class="kpi-label" data-en="SB Councilor" data-tl="Konsehal">SB Councilor</span>
-              </div>
-              <div class="kpi-card">
-                <span class="kpi-number accent-blue">4,321</span>
-                <span class="kpi-label" data-en="Official Votes" data-tl="Kabuuang Boto">Official Votes</span>
-              </div>
-              <div class="kpi-card">
-                <span class="kpi-number">12</span>
-                <span class="kpi-label" data-en="Measures Filed" data-tl="Panukalang Batas">Measures Filed</span>
-              </div>
-              <div class="kpi-card">
-                <span class="kpi-number">100%</span>
-                <span class="kpi-label" data-en="Attendance" data-tl="Presensya sa Sesyon">Attendance</span>
-              </div>
-              <div class="kpi-card">
-                <span class="kpi-number">18</span>
-                <span class="kpi-label" data-en="Barangays" data-tl="Barangay">Barangays</span>
-              </div>
-            </div>
+
           </div>
 
           <!-- Clean, Executive Public Servant Credential Card -->
           <div class="hero-profile-card">
             <div class="profile-card-header">
+              <div class="profile-readme-label">
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor"><path d="M0 1.75A.75.75 0 0 1 .75 1h4.253c1.227 0 2.317.59 3 1.501A3.743 3.743 0 0 1 11.006 1h4.245a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75h-4.507a2.25 2.25 0 0 0-1.591.659l-.622.621a.75.75 0 0 1-1.06 0l-.622-.621A2.25 2.25 0 0 0 5.258 13H.75a.75.75 0 0 1-.75-.75Zm7.251 10.324.004-9.07c-.546-.459-1.24-.754-2.252-.754H1.5v9h3.757a3.75 3.75 0 0 1 1.994.574ZM8.755 2.999l.004 9.08a3.75 3.75 0 0 1 1.997-.579h3.744v-9h-3.494c-1.013 0-1.707.294-2.251.755Z"/></svg>
+                <span>README.md</span>
+              </div>
               <div class="profile-card-badge">
                 <span class="status-pulse-dot"></span>
-                <span data-en="Official Public Mandate" data-tl="Opisyal na Mandato">Official Public Mandate</span>
+                <span data-en="Official Mandate" data-tl="Opisyal na Mandato">Official Mandate</span>
               </div>
-
             </div>
 
             <div class="profile-card-identity">
               <div class="profile-identity-text">
-                <div class="profile-official-name">Hon. Charlon G. Caadlawon</div>
-                <div class="profile-official-role" data-en="Municipal Councilor • Bagamanoc, Catanduanes" data-tl="Konsehal ng Bayan • Bagamanoc, Catanduanes">
-                  Municipal Councilor • Bagamanoc, Catanduanes
-                </div>
+                <div class="profile-official-name" id="type-name" data-type-text="Hon. Charlon G. Caadlawon"></div>
+                <div class="profile-official-role" id="type-role" data-en="Municipal Councilor • Bagamanoc, Catanduanes" data-tl="Konsehal ng Bayan • Bagamanoc, Catanduanes" data-type-text="Municipal Councilor • Bagamanoc, Catanduanes"></div>
               </div>
             </div>
 
             <div class="profile-card-metrics">
               <div class="profile-metric-row">
                 <span class="metric-label" data-en="Electoral Mandate" data-tl="Mandato ng Halalan">Electoral Mandate</span>
-                <span class="metric-value">Rank 1 SB Councilor (4,321 votes)</span>
+                <span class="metric-value" id="type-mandate"></span>
               </div>
               <div class="profile-metric-row">
                 <span class="metric-label" data-en="Professional Licenses" data-tl="Propesyonal na Lisensya">Professional Licenses</span>
                 <span class="metric-value" style="display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.2rem;">
-                  <span style="font-size: 0.72rem; font-family: var(--font-mono); font-weight: 700; background: #f1f5f9; padding: 0.15rem 0.45rem; border-radius: 4px; border: 1px solid #e2e8f0; color: #0f172a;">PRC RCE #0145892</span>
-                  <span style="font-size: 0.72rem; font-family: var(--font-mono); font-weight: 700; background: #f1f5f9; padding: 0.15rem 0.45rem; border-radius: 4px; border: 1px solid #e2e8f0; color: #0f172a;">PRC RMP #0009312</span>
+                  <span class="prc-badge">PRC RCE #0145892</span>
+                  <span class="prc-badge">PRC RMP #0009312</span>
                 </span>
               </div>
               <div class="profile-metric-row">
                 <span class="metric-label" data-en="Committee Leadership" data-tl="Pamumuno sa Komite">Committee Leadership</span>
-                <span class="metric-value">Ways &amp; Means • Education • Tourism</span>
+                <span class="metric-value" id="type-committee"></span>
               </div>
             </div>
 
